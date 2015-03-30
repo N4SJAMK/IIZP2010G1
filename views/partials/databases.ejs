@@ -1,0 +1,12 @@
+<h2 class="page-title">Databases</h2>
+
+<div class="col-1">
+  <table class="table table-striped">
+    <caption>Load of databases</caption>
+    <thead><tr><th>Database name</th><th>No. of rows</th><th>Max no. of rows</th><th>Load (%)</th><th></th></tr></thead>
+    <tfoot><tr><td colspan="5" class="text-right"><a href="#">backup/restore all databases</a></td></tr></tfoot>
+    <tbody><% for(var i = 0; i < dbs.length; i++) {%>
+		<tr><td><%- dbs[i].title %></td><td><%- dbs[i].rowCount %></td><td><%- dbs[i].rowMaxCount %></td><td><%- dbs[i].load %></td><td><a href="backup/<%- dbs[i].value %>">backup this db</a></td></tr>
+    <% } %></tbody>
+  </table>
+</div>

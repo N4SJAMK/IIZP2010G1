@@ -1,0 +1,20 @@
+<h2 class="page-title">Users</h2>
+
+<div class="col-1">
+  <table class="table table-striped" width="100%">
+    <caption>Top-load users</caption>
+    <ul>
+      <thead><tr><th>User name</th><th>No. of boards</th><th>No. of tickets</th><th>No. of actions</th><th></th></tr></thead>
+      <tbody><% for(var i = 0; i < users.length; i++) {%>
+      <tr>
+        <td><a href="user/<%- users[i].email %>"><%- users[i].email %></a></td>
+        <td><%- boards[i] %></td>
+        <td><%- tickets[i] %></td>
+        <td><%- actions[i] %></td>
+        <td><a href="user/<%- users[i].email %>#ban">Ban user</a> | <a href="">recover password</a></td>
+      </tr>
+      <% } %></tbody>
+    </ul>
+    <ul>
+    </ul>
+</div>

@@ -1,0 +1,16 @@
+<h2 class="page-title">Boards</h2>
+
+<div class="col-md-6 col-sm-1">
+  <table class="table table-striped">
+    <caption>Top-load boards</caption>
+    <thead><tr><th>Board name</th><th>Board owner</th><th>No. of tickets</th><th>No. of actions</th><th>No. of guests</th></tr></thead>
+    <% for(var i = 0; i < boards.length; i++) {%>
+      <tr>
+        <td><a href="board/<%- boards[i].name %>"><%- boards[i].name %></a></td>
+        <td><a href="user/<%- boardAuthor[i] %>"><%- boardAuthor[i] %></a></td>
+        <td><%- tickets[i] %></td>
+    </tr>
+    <% } %>
+    <tfoot><tr><td colspan="5" class="text-info">Number of actions is actions per hour</td></tr></tfoot>
+  </table>
+</div>
