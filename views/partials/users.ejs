@@ -1,20 +1,39 @@
 <h2 class="page-title">Users</h2>
-
-<div class="col-1">
+<% if (bannedUser) { %>
+<div class="panel panel-success" id="banclaim"><div class="panel-body"><%= bannedUser %> banned! <button type="button" class="close" data-target="#banclaim" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div></div>
+<% } else if (recoveredUser) { %>
+<%	if (sent) { %>
+<div class="panel panel-success" id="recoveryclaim"><div class="panel-body">OK: Password for <%= recoveredUser %> recovered and email sent!
+<% } else { %>
+<div class="panel panel-success" id="recoveryclaim"><div class="panel-body">ERR: Password for <%= recoveredUser %> recovered but email not sent...
+<% } %>
+	<button type="button" class="close" data-target="#recoveryclaim" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div></div>
+<% } %>
+<div>
   <table class="table table-striped" width="100%">
     <caption>Top-load users</caption>
-    <ul>
-      <thead><tr><th>User name</th><th>No. of boards</th><th>No. of tickets</th><th>No. of actions</th><th></th></tr></thead>
+      <thead><tr><th>User name</th><th>No. of boards</th><th>No. of tickets</th><th>No. of actions</th><th>banned?</th><th></th></tr></thead>
       <tbody><% for(var i = 0; i < users.length; i++) {%>
       <tr>
-        <td><a href="user/<%- users[i].email %>"><%- users[i].email %></a></td>
+        <td><a href="user/<%- users[i].email %>" id="<%- users[i].email %>"><%- users[i].email %></a></td>
         <td><%- boards[i] %></td>
         <td><%- tickets[i] %></td>
         <td><%- actions[i] %></td>
-        <td><a href="user/<%- users[i].email %>#ban">Ban user</a> | <a href="">recover password</a></td>
+        <td><%- banned[i] %></td>
+        <td>
+			<a href="#ban<%- i %>" data-toggle="collapse" aria-expanded="false" aria-controls="ban<%- i %>">Ban user</a> | <a href="#recover<%- i %>" data-toggle="collapse" aria-expanded="false" aria-controls="recover<%- i %>">recover password</a>
+			<div class="collapse" id="ban<%- i %>">
+			  <form action="/banuser" method="POST" class="form form-inline well">
+				<input type="hidden" name="email" value="<%- users[i].email %>"><input type="date" name="begin" value="<%- users[i].banningBegin %>">&ndash;<input type="date" name="end" value="<%- users[i].banningEnd %>"><button type="submit">Ban</button>
+			  </form>
+			</div>
+			<div class="collapse" id="recover<%- i %>">
+			  <form action="/recoverpassword" method="POST" class="form form-inline well">
+				<input type="hidden" name="email" value="<%- users[i].email %>"><button type="submit">Recover password</button>
+			  </form>
+			</div>
+        </td>
       </tr>
       <% } %></tbody>
-    </ul>
-    <ul>
-    </ul>
+    </table>
 </div>

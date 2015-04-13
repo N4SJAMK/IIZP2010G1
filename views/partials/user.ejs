@@ -1,0 +1,51 @@
+<h2 class="page-title"><%- user.email %>'s profile</h2>
+
+<div class="col-md-6 col-sm-1">
+  <table class="table table-striped" width="100%">
+    <caption>basic information</caption>
+    <tr><td>Email</td><td><%- user.email %></td></tr>
+    <tr><td>Used ID</td><td><%- user._id %></td></tr>
+    <tr><td>Banned</td><td> <%- user.isBanned() %> </td></tr>
+    <tr><td>Board count</td><td><%- totalBoards %></td></tr>
+    <tr><td>Ticket count</td><td><%- totalTickets %></td></tr>
+  </table>
+  
+  <table class="table table-striped" width="100%">
+    <caption>use your might</caption>
+    <tr>
+      <td>
+        <a href="#recover<%- i %>" data-toggle="collapse" aria-expanded="false" aria-controls="recover<%- i %>">recover password</a>
+        <div class="collapse" id="recover<%- i %>">
+          <form action="/recoverpassword" method="POST" class="form form-inline well">
+		    <input type="hidden" name="email" value="<%- user.email %>"><button type="submit">Recover password</button>
+		  </form>
+		</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="danger">
+        <a href="#ban<%- i %>" data-toggle="collapse" aria-expanded="false" aria-controls="ban<%- i %>">Ban user</a>
+          <div class="collapse" id="ban<%- i %>">
+            <form action="/banuser" method="POST" class="form form-inline well">
+              <input type="hidden" name="email" value="<%- user.email %>"><input type="date" name="begin" value="<%- user.banningBegin %>">&ndash;<input type="date" name="end" value="<%- user.banningEnd %>"><button type="submit">Ban</button>
+              <nobr style="color: grey; margin-left: 20px;"> YYYY-MM-DD</nobr>
+            </form>
+          </div>
+      </td>
+    </tr>
+  </table>
+
+</div>
+  
+<div class="col-md-6 col-sm-1">
+  <table class="table table-striped" width="100%">
+    <caption>boards by <%- user.email %></caption>
+    <thead><tr><th>Board name</th><th>No. of tickets</th></tr></thead>
+      <% for(var i = 0; i < totalBoards; i++) {%>
+        <tr>
+          <td><a href="/board/<%- boardNames[i] %>"><%- boardNames[i] %></a></td>
+          <td><%- boardTickets[i] %></td>
+      </tr>
+      <% } %>
+  </table>
+</div>

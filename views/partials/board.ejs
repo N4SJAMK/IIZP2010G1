@@ -1,0 +1,16 @@
+<h2 class="page-title">Board <%- board.name %></h2>
+
+<div class="col-md-6 col-sm-1">
+  <table class="table table-striped" width="100%">
+    <caption>basic information</caption>
+    <tr><td>Board id</td><td><%- board._id %></td></tr>
+    <tr><td>Access code</td><td><%- board.accessCode %></td></tr>
+    <tr><td>Description</td><td><%- board.description %></td></tr>
+    <tr><td>Size</td><td><%- board.size.width %> x <%- board.size.height %></td></tr>
+    <tr><td>Background</td><td><%- board.background %></td></tr>
+    <tr><td></td><td></td></tr>
+    <tr><td>Created by</td><td><a href="/user/<%- author %>"><%- author %></a></td></tr>
+    <tr><td>Date created</td><td><%- date %></td></tr>
+    <tr><td>Ticket count</td><td><%- boardTicketCount %></td></tr>
+  </table>
+</div>

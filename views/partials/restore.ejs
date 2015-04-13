@@ -1,6 +1,7 @@
 <h2>Restore document</h2>
 
-<form action="/restoreapi" method="POST" enctype="multipart/form-data">
-<input type="file" name="db"> <button type="submit">restore</button>
+<form action="/restore" method="POST" enctype="multipart/form-data">
+<input type="file" name="db">
+<button type="submit">restore</button>
 <label><input type="checkbox" name="overwrite" readonly checked value="1"> Overwrite current data</label>
 </form>

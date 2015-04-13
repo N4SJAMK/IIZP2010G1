@@ -1,12 +1,19 @@
 <h2 class="page-title">Databases</h2>
 
-<div class="col-1">
+<form action="/databases" method="POST">
   <table class="table table-striped">
     <caption>Load of databases</caption>
-    <thead><tr><th>Database name</th><th>No. of rows</th><th>Max no. of rows</th><th>Load (%)</th><th></th></tr></thead>
-    <tfoot><tr><td colspan="5" class="text-right"><a href="#">backup/restore all databases</a></td></tr></tfoot>
+    <thead><tr><th>Database name</th><th>No. of rows</th><th>Max no. of rows</th><th>Load (%)</th><th><input type="checkbox" disabled></th></tr></thead>
+    <tfoot><tr><td colspan="5" class="text-right">
+		selected: <button type="submit" name="action" value="empty" onclick="return (confirm('Really empty selected?'));" class="btn">empty</button><a href="#backup" class="btn" data-toggle="collapse" aria-expanded="false" aria-controls="i">make a backup...</a>
+		<div class="collapse" id="backup<%- i %>"><div class="well">
+			<div class="form-group"><label class="control-label">Creator <input type="text" name="creator" value="" placeholder="creator"></label></div>
+			<div class="form-group"><label class="control-label">Comments <input type="text" name="comments" value="" placeholder="comments..."></label></div>
+			<button type="submit" name="action" value="backup">backup</button>
+		</div></div></td></tr></tfoot>
     <tbody><% for(var i = 0; i < dbs.length; i++) {%>
-		<tr><td><%- dbs[i].title %></td><td><%- dbs[i].rowCount %></td><td><%- dbs[i].rowMaxCount %></td><td><%- dbs[i].load %></td><td><a href="backup/<%- dbs[i].value %>">backup this db</a></td></tr>
+		<tr><td><%- dbs[i].title %></td><td><%- dbs[i].rowCount %></td><td><%- dbs[i].rowMaxCount %></td><td><%- dbs[i].load %></td>
+		<td><input type="checkbox" name="db[]" value="<%- dbs[i].value %>"></td></tr>
     <% } %></tbody>
   </table>
-</div>
+</form>

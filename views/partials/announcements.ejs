@@ -1,0 +1,36 @@
+<h2 class="page-title">Announcements</h2>
+
+<div>
+  <table class="table table-striped announcements" width="100%">
+    <caption>All announcements</caption>
+      <thead><tr><th>Type</th><th>Boards</th><th>Title</th><th>Body</th><th>Time frame</th><th>Level</th><th></th></tr></thead>
+      <tbody><% for(var i = 0; i < announcements.length; i++) {%>
+      <tr>
+        <td><a href="announcement/<%- announcements[i]._id %>" class="content" disabled><%- announcements[i].type %></a><span class="edit"><select name="" form="annoform_row<%= i %>"><% for(var t = 0; t < types.length; t++) { %>
+			<option value="<%= types[t] %>"<% if (types[t] == announcements[i].type) { %> selected<% } %>><%= types[t] %></option>
+		<% } %>
+		</select></span></td>
+		<td><span class="content">*</span><span class="edit"><select multiple name="board"></select></span></td>
+        <td><span class="content"><%- announcements[i].title %></span><span class="edit"><input type="text" name="" value="<%= announcements[i].title %>" form="annoform_row<%= i %>"></span></td>
+        <td><span class="content"><%- announcements[i].body %></span><span class="edit"><input type="text" name="" value="<%= announcements[i].body %>" form="annoform_row<%= i %>"></span></td>
+        <td><span class="content"><%- announcements[i].visible.begin %>&ndash;<%= announcements[i].visible.end %></span><span class="edit"><input type="date" name="" value="<%= announcements[i].visibleBegin %>" form="annoform_row<%= i %>">&ndash;<input type="date" name="" value="<%= announcements[i].visibleEnd %>" form="annoform_row<%= i %>"></span></td>
+        <td><span class="content"><%- announcements[i].level %></span><span class="edit"><select name="" form="annoform_row<%= i %>"><% for(var l = 0; l < levels.length; l++) { %>
+			<option value="<%= levels[l] %>"<% if (levels[l] == announcements[i].level) { %> selected<% } %>><%= levels[l] %></option>
+		<% } %>
+		</select></span></td>
+        <td>
+			<button type="button" class="btn" onclick="this.parentNode.parentNode.classList.add('edited');">edit row</button>
+			<div>
+				<form action="/announcements" method="POST" id="annoform_row<%= i %>" class="form form-inline well edit">
+					<input type="hidden" name="id" value="<%= announcements[i]._id %>">
+					<button type="button" class="btn" onclick="this.parentNode.parentNode.parentNode.parentNode.classList.remove('edited');">cancel edit</button>
+					<button type="submit" class="btn btn-primary">save changes</button>
+				</form>
+			</div>
+        </td>
+      </tr>
+      <% } %></tbody>
+    </table>
+</div>
+
+<form action="/announcements" method="POST" id="annoform" hidden><button type="submit" class="btn btn-primary">Submit</button></form>

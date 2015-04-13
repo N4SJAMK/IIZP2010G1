@@ -2,6 +2,16 @@ var utils = {};
 
 utils.rand = function rand(min, max) { return Math.floor(Math.random() * (max - min)) + min; };
 
+utils.padLeft = function(pad, str) { return (pad + str).slice(-pad.length); };
+
+utils.formatDate = function(d) {
+
+	if (!(d instanceof Date)) return '';
+
+	return d.getFullYear()+'-'+this.padLeft('00', (d.getMonth()+1))+'-'+this.padLeft('00', d.getDate())
+
+};
+
 utils.generateRandomUserData = function() {
 
 	var fnames = ['Bruce','Alfred Jodokus','Muumi','I am','Donatello','Jacob', 'Mason', 'William', 'Jayden', 'Noah', 'Michael', 'Ethan', 'Alexander', 'Aiden', 'Daniel', 'Anthony', 'Matthew', 'Elijah', 'Joshua', 'Liam', 'Andrew', 'James', 'David', 'Benjamin', 'Logan', 'Christopher', 'Joseph', 'Jackson', 'Gabriel', 'Ryan', 'Samuel', 'John', 'Nathan', 'Lucas', 'Christian', 'Jonathan', 'Caleb', 'Dylan', 'Landon', 'Isaac', 'Gavin', 'Brayden', 'Tyler', 'Luke', 'Evan', 'Carter', 'Nicholas', 'Isaiah', 'Owen', 'Jack', 'Jordan', 'Brandon', 'Wyatt', 'Julian', 'Aaron', 'Sophia', 'Isabella', 'Emma', 'Olivia', 'Ava', 'Emily', 'Abigail', 'Madison', 'Mia', 'Chloe', 'Elizabeth', 'Ella', 'Addison', 'Natalie', 'Lily', 'Grace', 'Samantha', 'Avery', 'Sofia', 'Aubrey', 'Brooklyn', 'Lillian', 'Victoria', 'Evelyn', 'Hannah', 'Alexis', 'Charlotte', 'Zoey', 'Leah', 'Amelia', 'Zoe', 'Hailey', 'Layla', 'Gabriella', 'Nevaeh', 'Kaylee', 'Alyssa', 'Anna', 'Sarah', 'Allison', 'Savannah', 'Ashley', 'Audrey', 'Taylor', 'Brianna', 'Aaliyah', 'Riley', 'Camila', 'Khloe', 'Claire'],
@@ -47,27 +57,27 @@ utils.generateRandomPassword = function() {
 };
 
 utils.generateRandomBoard = function(userIDs){
-  
-  
+
+
   var possibleNames = ['lankku', 'board', 'lauta', 'asdasd', 'muumimaa', 'pokemonit', 'oma', 'testi', 'projekti', 'scrum', 'gamejam', 'derp', 'häksiboksi', 'koodit', 'joulu', 'jeee'];
-      
+
   var boardName = possibleNames[this.rand(0, possibleNames.length-1)] + this.rand(0, 999);
   var boardAuthor = userIDs[this.rand(0, userIDs.length-1)];
-  
+
   return {name:boardName, createdBy:boardAuthor};
-  
+
 };
 
 utils.generateRandomTicket = function(boardIDs){
-  
-  
+
+
   var heading = "heading";
   var content = "niin paljon tekstiä";
-      
+
   var boardID = boardIDs[this.rand(0, boardIDs.length-1)];
-  
+
   return {heading:heading, content:content, board:boardID};
-  
+
 }
 
 module.exports = utils;

@@ -12,7 +12,7 @@ module.exports = {
       adminpaneelin vasemmassa alakulmassa.
     */
 
-	res.locals.guestCount = "sinä";
+	//res.locals.guestCount = "sinä";
 
     User.count({}, function(err, count) {
       res.locals.userCount = count;
@@ -22,7 +22,13 @@ module.exports = {
 
         Ticket.count({}, function(err, count) {
           res.locals.ticketCount = count;
-          next();
+
+          Event.count({createdAt: {$gt: ((new Date) - 1000*60*60)}, type: "BOARD_GUEST_JOIN"}, function (err, count) {
+		    res.locals.guestCount = count;
+
+            next();
+		  });
+
         });
 
       });
@@ -31,37 +37,80 @@ module.exports = {
 
   },
 
-  getUsers: function(req, res, next) {
+  getEventsByPerson: function(req, res, next) {
     /*
-      Palauttaa kaikki käyttäjät ja niiden id:n sekä emailin
+      palauttaa eventtien määrän 60 min aikana alenevassa järjestyksessä.
     */
 
-    User.aggregate([
-    {
-      $group: {
-        _id: "$email"
-      }
-    }
-    ], function (err, result){
-        if(err){
-          console.log(err);
-          return;
+    var lastHour = new Date();
+    lastHour.setHours(lastHour.getHours()-1);
+
+    Event.aggregate([
+      {$match:
+        {
+          _id: {$ne: null},
+          createdAt: {$gt: lastHour}
         }
-//        console.log(result)
-//        return result;
-//        res.locals.userList = result;
-//        res.send("moro :D");
+      },
+      {$group:
+        {
+          _id: "$user.id",
+          count: {$sum:1}
+        }
+      },
+      {$sort:
+        {
+          count: -1
+        }
+      },
+      {$limit: 10}
+    ],
+      function (err, result){
+        if(err){
+          next("eventtejä ei löytynyt", result);
+          //return result;
+        }
         next(false, result);
       }
     );
   },
 
-  getUserByID: function(req, res, ID, next){
+  getEventsByBoard: function(req, res, next) {
     /*
-      Palauttaa käyttäjän IDn.
+      palauttaa eventtien määrän 60 min aikana alenevassa järjestyksessä.
     */
 
+    var lastHour = new Date();
+    lastHour.setHours(lastHour.getHours()-1);
 
+    Event.aggregate([
+      {$match:
+        {
+          _id: {$ne: null},
+          createdAt: {$gt: lastHour}
+        }
+      },
+      {$group:
+        {
+          _id: "$board",
+          count: {$sum:1}
+        }
+      },
+      {$sort:
+        {
+          count: -1
+        }
+      },
+      {$limit: 10}
+    ],
+      function (err, result){
+        if(err){
+          next("eventtejä ei löytynyt", result);
+          return;
+        }
+        next(false, result);
+      }
+    );
   }
 
 };

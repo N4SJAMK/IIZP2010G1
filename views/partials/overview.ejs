@@ -2,26 +2,35 @@
 <div class="container-fluid">
   <div class="row">
 
-    <div class="col-md-4 col-sm-1">
-      <table class="table table-striped"><h3><a href="databases">Databases</a></h3>
-        <caption>Load of databases</caption>
-        <thead><tr><th>Database name</th><th>No. of rows</th><th>Max no. of rows</th><th>Load (%)</th><th></th></tr></thead>
-        <tfoot><tr><td colspan="5" class="text-right"><a href="#">backup/restore all databases</a></td></tr></tfoot>
-      </table>
-    </div>
-
-    <div class="col-md-4 col-sm-1"><h3><a href="boards">Boards</a></h3>
+    <div class="col-md-6 col-sm-1"><h3><a href="boards">Most active boards</a></h3>
       <table class="table table-striped">
         <caption>Top-load boards</caption>
-        <thead><tr><th>Board name</th><th>Board owner</th><th>No. of tickets</th><th>No. of actions</th><th>No. of guests</th></tr></thead>
+        <thead><tr><th>Board name</th><th>Board owner</th><th>No. of tickets</th><th>No. of guests</th><th>No. of actions</th></tr></thead>
+          <% for(var i = 0; i < boardEvents.length; i++) {%>
+            <tr>
+              <td><a href="board/<%- boardName[i] %>"><%- boardName[i] %></a></td>
+              <td><a href="user/<%- boardOwner[i] %>"><%- boardOwner[i] %></a></td>
+              <td><%- boardTickets[i] %></td>
+              <td><%- boardGuests[i] %></td>
+              <td><%- boardEvents[i].count %></td>
+            </tr>
+          <% } %>
         <tfoot><tr><td colspan="5" class="text-info">Number of actions is actions per hour</td></tr></tfoot>
       </table>
     </div>
 
-    <div class="col-md-3 col-sm-1"><h3><a href="users">Users</a></h3>
+    <div class="col-md-5 col-sm-1"><h3><a href="users">Most active users</a></h3>
       <table class="table table-striped">
         <caption>Top-load users</caption>
         <thead><tr><th>User name</th><th>No. of boards</th><th>No. of tickets</th><th>No. of actions</th></tr></thead>
+          <% for(var i = 0; i < userEvents.length; i++) {%>
+            <tr>
+              <td><a href="user/<%- userName[i] %>"><%- userName[i] %></a></td>
+              <td><%- userBoards[i] %></td>
+              <td><%- userTickets[i] %></td>
+              <td><%- userEvents[i].count %></td>
+            </tr>
+          <% } %>
       </ul>
     </div>
 
