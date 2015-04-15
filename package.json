@@ -1,7 +1,7 @@
 {
   "name": "adminpanel",
   "description": "A tool to manage contriboard's databases",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "bcrypt": "^0.8.1",
@@ -11,16 +11,16 @@
     "jsonwebtoken": "~0.4.0",
     "mongoose": "^3.8.21",
     "multer": "~0.1.6",
-    "nodemon": "*",
     "basic-auth":"*",
     "utils": "^0.0.2",
 	"nodemailer":"*"
   },
   "devDependencies": {
+  	"nodemon": "*",
     "promise": "~6.0.0"
   },
   "scripts": {
     "start": "node app.js"
   },
-  "author": ""
+  "author": "Ryhmä Ygönen: Jokipalo & Koskimies"
 }
